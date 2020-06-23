@@ -18,6 +18,10 @@ RUN echo "anon" | tee /srv/ftp/anon.txt
 #RUN rc-service vsftpd restart
 #RUN rc-update add vsftpd
 
-EXPOSE 21
+COPY srcs/config.sh ./
+RUN	chmod 777 config.sh
 
-#CMD vsr -S 0.0.0.0:5000 -t /www/
+EXPOSE 21
+VOLUME /ftp/ftp
+
+CMD ./config.sh
