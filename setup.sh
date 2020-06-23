@@ -24,14 +24,17 @@ echo "Nginx..."
 docker build -t mynginx	./srcs/nginx/
 docker build -t mywordpress	./srcs/Wordpress/
 docker build -t myphpmyadmin ./srcs/Phpmyadmin/
+docker build -t myftps ./srcs/FTPS/
 
 echo "deploy..."
 #kubectl	-- get pods
 kubectl run nginx-deployement --image=mynginx:latest --image-pull-policy=Never
 kubectl run wordpress-deployement --image=mywordpress:latest --image-pull-policy=Never
 kubectl run phpmyadmin-deployement --image=myphpmyadmin:latest --image-pull-policy=Never
+kubectl run ftps-deployement --image=myftps:latest --image-pull-policy=Never
 
 kubectl expose deployment nginx-deployement --type=NodePort --port=80 --target-port=443
 kubectl expose deployment wordpress-deployement --type=NodePort --port=5050
 kubectl expose deployment phpmyadmin-deployement --type=NodePort --port=5000
+kubectl expose deployment ftps-deployement --type=NodePort --port=21
 minikube service list
