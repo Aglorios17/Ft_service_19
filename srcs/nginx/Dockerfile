@@ -21,9 +21,9 @@ COPY srcs/nginx.conf	/etc/nginx/
 RUN mkdir /etc/nginx/ssl \
 && openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out /etc/nginx/ssl/www.pem -keyout /etc/nginx/ssl/www.key -subj "/C=BE/ST=Bxl/L=Bruxelles/O=s19/OU=aglorios/CN=ft_services"
 
-COPY srcs/index.html /www
+COPY srcs/index.html /var/www/localhost
 
-EXPOSE 80 443
+EXPOSE 22 80 443
 
 RUN nginx -t
 

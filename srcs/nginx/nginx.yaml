@@ -14,9 +14,9 @@ spec:
       targetPort: 443
       protocol: TCP
     - name:	ssh
-      port: 21
-      targetPort: 21
-      protocol: TCP
+      port: 22
+      targetPort: 22
+      protocol: TCP 
     selector:
         app: nginx-app
 ---

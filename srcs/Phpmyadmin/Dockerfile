@@ -18,4 +18,4 @@ RUN mkdir -p /run/phpMyadmin
 
 EXPOSE 5000
 
-CMD php -S 0.0.0.0:5000 -t /www/
+CMD php -S 0.0.0.0:5050 -t /www/
