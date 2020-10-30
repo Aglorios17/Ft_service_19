@@ -33,15 +33,17 @@ eval $(minikube docker-env)
 
 echo "Nginx..."
 docker build -t mynginx	./srcs/nginx/
-#echo "Wordpress..."
-#docker build -t mywordpress	./srcs/Wordpress/
-#echo "phpmyadmin..."
-#docker build -t myphpmyadmin ./srcs/Phpmyadmin/
+echo "Wordpress..."
+docker build -t mywordpress	./srcs/Wordpress/
+echo "phpmyadmin..."
+docker build -t myphpmyadmin ./srcs/Phpmyadmin/
 #echo "ftps..."
 #docker build -t myftps ./srcs/FTPS/
 
 
 echo "deploy..."
 kubectl create -f srcs/nginx/nginx.yaml
+kubectl create -f srcs/Wordpress/wordpress.yaml
+kubectl create -f srcs/Phpmyadmin/phpmyadmin.yaml
 
 kubectl get svc

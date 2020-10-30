@@ -45,7 +45,7 @@ spec:
           name: http
         - containerPort: 443
           name: https
-        - containerPort: 22
+        - containerPort: 5050
           name: ssh
         imagePullPolicy: Never
         env: 

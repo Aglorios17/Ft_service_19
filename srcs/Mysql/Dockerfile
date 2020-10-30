@@ -14,7 +14,8 @@ COPY srcs/sql_init.sh ./
 #RUN /usr/bin/mysql_install_db --user=mysql --datadir="/var/lib/mysql"
 #RUN /usr/bin/mysqld_safe --datadir="/var/lib/mysql"
 
-EXPOSE	3306
-
 RUN	chmod 777 sql_init.sh
+
+EXPOSE 3306
+
 RUN	./sql_init.sh

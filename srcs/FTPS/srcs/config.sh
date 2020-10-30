@@ -40,11 +40,11 @@ done
 
 
 if [ -z "$MIN_PORT" ]; then
-  MIN_PORT=21000
+  MIN_PORT=21
 fi
 
 if [ -z "$MAX_PORT" ]; then
-  MAX_PORT=21010
+  MAX_PORT=21
 fi
 
 if [ ! -z "$ADDRESS" ]; then
