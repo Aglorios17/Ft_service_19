@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: mysql
+spec:
+    type: LoadBalancer
+    ports:
+    - name: sql
+      port: 3306
+      targetPort: 3306
+      protocol: TCP
+    selector:
+        app: mysql-app
+---
+
+apiVersion: v1 
+kind: PersistentVolumeClaim
+ metadata:
+   name: mysql-storage
+   namespace: link-wp-pma-mysql
+ spec:
+   accessModes:
+     - ReadWriteOnce
+   resources:
+     requests:
+       storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  labels:
+    app: mysql-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-app
+  template:
+    metadata:
+      labels:
+        app: mysql-app
+    spec:
+      containers:
+      - name: mysql
+        image: mysql
+        ports:
+        - containerPort: 3306
+          name: sql
+        imagePullPolicy: Never

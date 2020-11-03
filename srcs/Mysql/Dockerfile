@@ -1,21 +1,19 @@
-FROM alpine
+FROM alpine:latest
 
 MAINTAINER Alessio Glorioso <aglorios@student.s19.be>
 
-RUN	apk update \
-&&	apk upgrade \
+RUN apk update \
 &&	apk add openrc \
-&&  apk add mariadb mariadb-client \
-&& 	rm -rf /var/cache/apk/*
+&& apk add mariadb mariadb-client && apk add --no-cache --upgrade bash \
+&& rm -rf /var/cache/apk/*
 
-COPY srcs/wordpress.sql	www/
-COPY srcs/sql_init.sh ./
+RUN mysql --version
 
-#RUN /usr/bin/mysql_install_db --user=mysql --datadir="/var/lib/mysql"
-#RUN /usr/bin/mysqld_safe --datadir="/var/lib/mysql"
+COPY ./srcs/init_docker.sh .
+COPY ./srcs/sql_init.sh .
+COPY ./srcs/wordpress.sql .
 
-RUN	chmod 777 sql_init.sh
+RUN chmod 777 init_docker.sh
+RUN chmod 777 sql_init.sh
 
-EXPOSE 3306
-
-RUN	./sql_init.sh
+CMD ./init_docker.sh
