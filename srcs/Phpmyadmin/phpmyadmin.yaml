@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: phpmyadmin
+#    namespace: link-mysql
 spec:
     type: LoadBalancer
     ports:
@@ -17,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: phpmyadmin-deployment
+#  namespace: link-mysql
   labels:
     app: phpmyadmin-app
 spec:

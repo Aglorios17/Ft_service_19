@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: link-wp-pma-mysql
+  name: link-mysql

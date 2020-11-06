@@ -4,16 +4,16 @@ MAINTAINER Alessio Glorioso <aglorios@student.s19.be>
 
 RUN apk update \
 &&	apk add openrc \
-&& apk add mariadb mariadb-client && apk add --no-cache --upgrade bash \
+&& apk add mariadb mariadb-client openrc \
 && rm -rf /var/cache/apk/*
 
-RUN mysql --version
+COPY ./srcs/init.sh .
+COPY ./srcs/wordpress.sql /
+#COPY ./srcs/my.cnf /etc/
 
-COPY ./srcs/init_docker.sh .
-COPY ./srcs/sql_init.sh .
-COPY ./srcs/wordpress.sql .
+#VOLUME /var/lib/mysql
 
-RUN chmod 777 init_docker.sh
-RUN chmod 777 sql_init.sh
+RUN chmod 777 init.sh
+EXPOSE 3306
 
-CMD ./init_docker.sh
+CMD ./init.sh

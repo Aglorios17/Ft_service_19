@@ -1,12 +1,12 @@
 echo "verif..."
-#minikube stop
-#minikube delete --all
+minikube stop
+minikube delete --all
 
 #echo "Brew Minikube..."
 #brew install minikube
 
 echo "Minikube start..."
-minikube start --driver=virtualbox --memory='3000' --disk-size 5000MB
+minikube start --driver=virtualbox --memory='3000' --disk-size 10000MB
 
 echo "addons..."
 minikube addons enable metallb
@@ -21,7 +21,7 @@ minikube dashboard &
 
 echo "metallb and namespace"
 kubectl apply -f srcs/metallb.yaml
-kubectl apply -f srcs/namespace.yaml
+#kubectl apply -f srcs/namespace.yaml
 
 eval $(minikube docker-env)
 
@@ -38,9 +38,9 @@ docker build -t mysql ./srcs/Mysql/
 
 
 echo "deploy..."
-kubectl apply -f srcs/nginx/nginx.yaml
-kubectl apply -f srcs/Wordpress/wordpress.yaml
-kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
 kubectl apply -f srcs/Mysql/sql.yaml
+kubectl apply -f srcs/nginx/nginx.yaml
+kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
+kubectl apply -f srcs/Wordpress/wordpress.yaml
 
 kubectl get svc

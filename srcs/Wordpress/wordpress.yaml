@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
     name: wordpress
+#    namespace: link-mysql
 spec:
     type: LoadBalancer
     ports:
@@ -17,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-deployment
+#  namespace: link-mysql
   labels:
     app: wordpress-app
 spec:
@@ -35,4 +37,7 @@ spec:
         ports:
         - containerPort: 5050
           name: http
+#        env:
+#        - name: WORDPRESS_DB_HOST
+#          value: mysql:3306
         imagePullPolicy: Never

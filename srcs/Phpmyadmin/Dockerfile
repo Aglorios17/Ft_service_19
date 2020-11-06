@@ -15,6 +15,7 @@ RUN wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-
 Run mkdir /www
 RUN mv Phpmyadmin/* /www/
 RUN mkdir -p /run/phpMyadmin
+COPY srcs/config.inc.php /www/config.inc.php
 
 EXPOSE 5000
 
