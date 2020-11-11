@@ -1,4 +1,4 @@
-echo "verif..."
+#echo "verif..."
 #minikube stop
 #minikube delete --all
 
@@ -10,6 +10,7 @@ minikube start --driver=virtualbox --memory='3000' --disk-size 10000MB
 
 echo "addons..."
 minikube addons enable metallb
+minikube addons enable metrics-server
 minikube addons enable dashboard
 minikube addons list
 
@@ -37,8 +38,8 @@ echo "influxdb..."
 docker build -t myinfluxdb ./srcs/influxdb/
 echo "Grafana..."
 docker build -t mygrafana ./srcs/Grafana/
-#echo "ftps..."
-#docker build -t myftps ./srcs/FTPS/
+echo "ftps..."
+docker build -t myftps ./srcs/FTPS/
 
 echo "deploy..."
 kubectl apply -f srcs/Mysql/sql.yaml
@@ -47,5 +48,6 @@ kubectl apply -f srcs/nginx/nginx.yaml
 kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
 kubectl apply -f srcs/Wordpress/wordpress.yaml
 kubectl apply -f srcs/Grafana/grafana.yaml
+kubectl apply -f srcs/FTPS/ftps.yaml
 
 kubectl get svc

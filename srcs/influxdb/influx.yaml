@@ -38,6 +38,8 @@ spec:
   selector:
     matchLabels:
       app: influxdb-app
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -48,7 +50,7 @@ spec:
         image: myinfluxdb
         ports:
         - containerPort: 8086
-          name: sql
+          name: influxdb
         imagePullPolicy: Never
         volumeMounts:
         - name: influxdb-storage

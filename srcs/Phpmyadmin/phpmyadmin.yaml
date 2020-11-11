@@ -20,7 +20,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: phpmyadmin-deployment
-#  namespace: link-mysql
   labels:
     app: phpmyadmin-app
 spec:
@@ -28,6 +27,8 @@ spec:
   selector:
     matchLabels:
       app: phpmyadmin-app
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

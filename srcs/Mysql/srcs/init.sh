@@ -1,4 +1,5 @@
 #!/bin/ash
+telegraf &
 openrc &> /dev/null
 touch /run/openrc/softlevel
 /etc/init.d/mariadb setup &> /dev/null

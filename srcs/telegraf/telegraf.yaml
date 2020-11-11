@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: telegraf-service
+spec:
+    type: ClusterIP
+    ports:
+    - name: telegraf
+      port: 8025
+      targetPort: 8025
+      protocol: TCP
+    selector:
+        app: telegraf-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegraf-deployment
+  labels:
+    app: telegraf-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: telegraf-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: telegraf-app
+    spec:
+      containers:
+      - name: telegraf
+        image: mytelegraf
+        ports:
+        - containerPort: 8025
+          name: telegraf
+        imagePullPolicy: Never

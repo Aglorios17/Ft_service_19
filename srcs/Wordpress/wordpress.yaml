@@ -27,6 +27,8 @@ spec:
   selector:
     matchLabels:
       app: wordpress-app
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
