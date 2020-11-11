@@ -1,6 +1,6 @@
 #echo "verif..."
-#minikube stop
-#minikube delete --all
+minikube stop
+minikube delete --all
 
 #echo "Brew Minikube..."
 #brew install minikube
@@ -21,8 +21,7 @@ echo "Minikube dashboard..."
 minikube dashboard &
 
 echo "metallb and namespace"
-kubectl apply -f srcs/metallb.yaml
-#kubectl apply -f srcs/namespace.yaml
+kubectl apply -f ./srcs/metallb/metallb.yaml
 
 eval $(minikube docker-env)
 
