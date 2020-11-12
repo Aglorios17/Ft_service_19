@@ -1,6 +1,6 @@
 echo "verif..."
-#minikube stop
-#minikube delete --all
+minikube stop
+minikube delete --all
 
 #echo "Brew Minikube..."
 #brew install minikube

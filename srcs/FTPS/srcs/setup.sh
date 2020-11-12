@@ -1,6 +1,6 @@
 #!/bin/sh
 telegraf &
-echo -e "Password!\nPassword!\n" | adduser -h ftp/admin -s /sbin/nologin admin
+echo -e "admin\nadmin" | adduser -h ftp/admin -s /sbin/nologin admin
 mkdir -p ftp/admin
 chown admin:admin ftp/admin
 
