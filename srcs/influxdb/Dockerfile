@@ -9,7 +9,6 @@ RUN apk update \
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
 COPY ./srcs/setup.sh .
-#COPY ./srcs/influxdb.conf ./etc/influxdb.conf
 COPY ./srcs/telegraf.conf etc/telegraf/telegraf.conf
 
 RUN chmod 777 setup.sh

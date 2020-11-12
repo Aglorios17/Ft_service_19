@@ -2,26 +2,24 @@ FROM alpine
 
 MAINTAINER Alessio Glorioso <aglorios@student.s19.be>
 
-RUN	apk update \
-&&	apk upgrade \
-&&	apk add openrc \
+RUN	apk add --no-cache vsftpd \
 &&	apk add openssl \
-&& apk add vsftpd
+&&	apk add openrc
 
-RUN rm -rf /etc/vsftpd/vsftpd.conf
-COPY srcs/vsftpd.conf /etc/vsftpd/
+RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
-RUN mkdir /srv/ftp
-RUN chown nobody:nogroup /srv/ftp
-RUN echo "anon" | tee /srv/ftp/anon.txt
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=BE/ST=Bxl/L=Bruxelles/O=s19/OU=aglorios/CN=ft_services" -keyout /etc/ssl/certs/vsftpd.pem -out /etc/ssl/certs/vsftpd.pem
 
-#RUN rc-service vsftpd restart
-#RUN rc-update add vsftpd
+RUN chmod 755 /etc/ssl/certs/vsftpd.pem
 
-COPY srcs/config.sh ./
-RUN	chmod 777 config.sh
+COPY ./srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
+
+COPY ./srcs/setup.sh /
+
+COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
+RUN	chmod 777 setup.sh
 
 EXPOSE 21
-VOLUME /ftp/ftp
+VOLUME ftp/ftp
 
-CMD ./config.sh
+CMD	./setup.sh

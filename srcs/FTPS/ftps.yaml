@@ -3,7 +3,7 @@ kind: Service
 metadata:
     name: ftps
     annotations:
-        metallb.universe.tf/allow-shared-ip: unifi-addr
+      metallb.universe.tf/allow-shared-ip: unifi-addr
 spec:
     type: LoadBalancer
     loadBalancerIP: 192.168.99.232
@@ -14,6 +14,7 @@ spec:
       protocol: TCP
     selector:
         app: ftps-app
+
 ---
 
 apiVersion: apps/v1

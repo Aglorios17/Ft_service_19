@@ -1,6 +1,6 @@
-#echo "verif..."
-minikube stop
-minikube delete --all
+echo "verif..."
+#minikube stop
+#minikube delete --all
 
 #echo "Brew Minikube..."
 #brew install minikube
@@ -20,32 +20,36 @@ minikube kubectl -- get po -A
 echo "Minikube dashboard..."
 minikube dashboard &
 
-echo "metallb and namespace"
-kubectl apply -f ./srcs/metallb/metallb.yaml
-
+echo "Minikube docker-env..."
 eval $(minikube docker-env)
 
-echo "Nginx..."
-docker build -t mynginx	./srcs/nginx/
+echo "metallb"
+#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
+#kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
+#kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+kubectl apply -f ./srcs/metallb/configmetallb.yaml
+
+echo "mysql..."
+docker build -t mysql ./srcs/Mysql/
+echo "influxdb..."
+docker build -t myinfluxdb ./srcs/influxdb
 echo "Wordpress..."
 docker build -t mywordpress	./srcs/Wordpress/
 echo "phpmyadmin..."
 docker build -t myphpmyadmin ./srcs/Phpmyadmin/
-echo "mysql..."
-docker build -t mysql ./srcs/Mysql/
-echo "influxdb..."
-docker build -t myinfluxdb ./srcs/influxdb/
+echo "Nginx..."
+docker build -t mynginx	./srcs/nginx/
 echo "Grafana..."
 docker build -t mygrafana ./srcs/Grafana/
 echo "ftps..."
 docker build -t myftps ./srcs/FTPS/
 
-echo "deploy..."
+echo "deploy.."
 kubectl apply -f srcs/Mysql/sql.yaml
 kubectl apply -f srcs/influxdb/influx.yaml
-kubectl apply -f srcs/nginx/nginx.yaml
-kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
 kubectl apply -f srcs/Wordpress/wordpress.yaml
+kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
+kubectl apply -f srcs/nginx/nginx.yaml
 kubectl apply -f srcs/Grafana/grafana.yaml
 kubectl apply -f srcs/FTPS/ftps.yaml
 
