@@ -12,6 +12,26 @@ spec:
       port: 21
       targetPort: 21
       protocol: TCP
+    - name: ftps1
+      port: 21000
+      targetPort: 21000
+      protocol: TCP
+    - name: ftps2
+      port: 21001
+      targetPort: 21001
+      protocol: TCP
+    - name: ftps3
+      port: 21002
+      targetPort: 21002
+      protocol: TCP
+    - name: ftps4
+      port: 21003
+      targetPort: 21003
+      protocol: TCP
+    - name: ftps5
+      port: 21004
+      targetPort: 21004
+      protocol: TCP
     selector:
         app: ftps-app
 
@@ -41,4 +61,14 @@ spec:
         ports:
         - containerPort: 21
           name: http
+        - containerPort: 21000
+          name: ftps1
+        - containerPort: 21001
+          name: ftps2
+        - containerPort: 21002
+          name: ftps3
+        - containerPort: 21003
+          name: ftps4
+        - containerPort: 21004
+          name: ftps5
         imagePullPolicy: Never

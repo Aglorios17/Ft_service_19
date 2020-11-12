@@ -1,7 +1,3 @@
 #!/bin/sh
 telegraf &
-echo -e "admin\nadmin" | adduser -h ftp/admin -s /sbin/nologin admin
-mkdir -p ftp/admin
-chown admin:admin ftp/admin
-
-exec /usr/sbin/vsftpd -opasv_address=192.168.99.232 /etc/vsftpd/vsftpd.conf
+pure-ftpd -p 21000:21004 -P 192.168.99.232

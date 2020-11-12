@@ -2,24 +2,24 @@ FROM alpine
 
 MAINTAINER Alessio Glorioso <aglorios@student.s19.be>
 
-RUN	apk add --no-cache vsftpd \
-&&	apk add openssl \
-&&	apk add openrc
+RUN apk update && \
+    apk upgrade && \
+    apk add openssl curl
 
+RUN  apk add --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ pure-ftpd
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
 
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj "/C=BE/ST=Bxl/L=Bruxelles/O=s19/OU=aglorios/CN=ft_services" -keyout /etc/ssl/certs/vsftpd.pem -out /etc/ssl/certs/vsftpd.pem
+RUN adduser -D -h /home/aglorios aglorios && \
+    echo -e 'Aglorios\nAglorios' | passwd aglorios && \
+    echo -e 'Aglorios\nAglorios' | pure-pw useradd aglorios -u aglorios -g aglorios -d /home/aglorios
 
-RUN chmod 755 /etc/ssl/certs/vsftpd.pem
+RUN openssl req -x509 -nodes -days 365 -subj "/C=BE/ST=BX/L=Belgique/O=19/CN=aglorios" \
+    -newkey rsa:2048 -keyout /etc/ssl/private/pure-ftpd.pem -out /etc/ssl/private/pure-ftpd.pem
 
-COPY ./srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
+COPY ./srcs/setup.sh /setup.sh
+COPY ./srcs/telegraf.conf etc/telegraf/telegraf.conf
+RUN chmod +x setup.sh
 
-COPY ./srcs/setup.sh /
+EXPOSE 21 21000 21001 21002 21003 21004
 
-COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
-RUN	chmod 777 setup.sh
-
-EXPOSE 21
-VOLUME ftp/ftp
-
-CMD	./setup.sh
+CMD ./setup.sh
