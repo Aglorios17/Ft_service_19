@@ -1,3 +1,4 @@
 #!/bin/sh
 telegraf &
-php -S 0.0.0.0:5050 -t /www/
+php-fpm7&
+nginx -g 'pid /tmp/nginx.pid; daemon off;'
