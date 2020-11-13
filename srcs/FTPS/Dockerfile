@@ -4,7 +4,7 @@ MAINTAINER Alessio Glorioso <aglorios@student.s19.be>
 
 RUN apk update && \
     apk upgrade && \
-    apk add openssl curl
+    apk add openssl
 
 RUN  apk add --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ pure-ftpd
 RUN apk add telegraf --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/ --allow-untrusted --no-cache
