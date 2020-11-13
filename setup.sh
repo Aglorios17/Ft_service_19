@@ -37,9 +37,9 @@ echo "phpmyadmin..."
 docker build -t myphpmyadmin ./srcs/Phpmyadmin/
 kubectl apply -f srcs/Phpmyadmin/phpmyadmin.yaml
 
-PHPIP=$(kubectl get service phpmyadmin-service | grep "phpmyadmin-service" | awk '{print $3}')
-echo $PHPIP
-sed "31 s/pma/$PHPIP/" srcs/nginx/srcs/nginx > srcs/nginx/srcs/nginx.conf
+#PHPIP=$(kubectl get service phpmyadmin-service | grep "phpmyadmin-service" | awk '{print $3}')
+#echo $PHPIP
+#sed "31 s/pma/$PHPIP/" srcs/nginx/srcs/nginx > srcs/nginx/srcs/nginx.conf
 
 echo "Nginx..."
 docker build -t mynginx	./srcs/nginx/
